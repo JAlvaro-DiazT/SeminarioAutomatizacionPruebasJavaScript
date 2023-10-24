@@ -1,12 +1,16 @@
 const SignInPage = require('../pageobjects/signin.page');
 const assert = require('assert');
+const { Builder } = require('selenium-webdriver');
 
 describe('Test de inicio de sesión', function () {
     let signInPage;
 
     beforeEach(async function () {
-        signInPage = new SignInPage();
+        const driver = await new Builder().forBrowser('chrome').build();
+        signInPage = new SignInPage(driver);
+
         await signInPage.init();
+
     });
 
     afterEach(async function () {
@@ -16,6 +20,7 @@ describe('Test de inicio de sesión', function () {
     it('Debería iniciar sesión correctamente', async function () {
         this.timeout(5000);
         await signInPage.visit('http://localhost:8080');
+
         const user = 'alvaro';
         const key = 'diaz';
         await signInPage.signIn(user, key);
@@ -29,6 +34,7 @@ describe('Test de inicio de sesión', function () {
     it('Debería salir error al intentar iniciar sesión ', async function () {
         this.timeout(5000);
         await signInPage.visit('http://localhost:8080');
+
         const user = 'error prueba';
         const key = 'error123';
         await signInPage.signIn(user, key);

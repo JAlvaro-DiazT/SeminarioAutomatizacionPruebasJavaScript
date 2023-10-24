@@ -2,12 +2,16 @@ const assert = require('assert');
 
 const { faker } = require('@faker-js/faker');
 const RegisterPage = require("../pageobjects/register.page");
+const {Builder} = require("selenium-webdriver");
+const SignInPage = require("../pageobjects/signin.page");
 
 describe('Test de registrar usuario', function () {
     let registerPage;
 
     beforeEach(async function () {
-        registerPage = new RegisterPage();
+
+        const driver = await new Builder().forBrowser('chrome').build();
+        registerPage = new RegisterPage(driver);
         await registerPage.init();
     });
 
@@ -37,13 +41,8 @@ describe('Test de registrar usuario', function () {
         const username = "alvaro";
         const key = "diaz";
 
-        // Llama a la función de registro de usuario (ajusta esto según tu estructura de código)
         await registerPage.registerUser(name, username, key, key);
-
-        // Obtiene el mensaje de registro (ajusta esto según tu estructura de código)
         const message = await registerPage.receivePopupMessage();
-
-        // Realiza la aserción (verifica que el mensaje sea igual a "Existing registration")
         assert.strictEqual(message, "Existing registration");
     });
 });

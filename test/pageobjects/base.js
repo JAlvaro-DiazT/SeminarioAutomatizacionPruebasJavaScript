@@ -1,8 +1,8 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
 class Base {
-    constructor() {
-        this.driver = null;
+    constructor(driver) {
+        this.driver = driver;
         this.ewait = null;
         this.goForward = By.xpath("//span[@class='ui-button-icon-left ui-icon ui-c pi pi-arrow-circle-right']");
         this.goBack = By.xpath("//span[@class='ui-button-icon-left ui-icon ui-c pi pi-arrow-circle-left']");
@@ -11,7 +11,7 @@ class Base {
     }
 
     async init() {
-        this.driver = await new Builder().forBrowser('chrome').build();
+        //this.driver = await new Builder().forBrowser('chrome').build();
         this.ewait = (condition) => {
             return this.driver.wait(condition);
         };
@@ -70,6 +70,7 @@ class Base {
     }
 
     async goFirstPage() {
+        this.isElementVisible(this.numberOneLocater)
         await this.click(this.numberOneLocater);
         // await this.click(this.titleOneLocater); // Esta línea es opcional
     }
