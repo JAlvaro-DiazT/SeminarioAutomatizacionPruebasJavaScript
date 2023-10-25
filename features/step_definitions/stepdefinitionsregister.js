@@ -2,12 +2,12 @@ const { When, Then, And, Given, Before, After} = require("@cucumber/cucumber");
 const assert = require("assert");
 const { Builder } = require("selenium-webdriver");
 const { faker } = require('@faker-js/faker');
-const RegisterPage = require("../../../test/pageobjects/register.page");
+const RegisterPage = require("../../test/pageobjects/register.page");
 const _ = require('lodash');
 const fs = require("fs");
-const Hook = require("../hook");
-const SignInPage = require("../../../test/pageobjects/signin.page");
-const ConfigureSMSPage = require("../../../test/pageobjects/configuresms.page");
+const Hook = require("./hook");
+const SignInPage = require("../../test/pageobjects/signin.page");
+const ConfigureSMSPage = require("../../test/pageobjects/configuresms.page");
 
 
 let registerPage;

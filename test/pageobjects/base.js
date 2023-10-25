@@ -24,7 +24,7 @@ class Base {
 
     async getText(locator) {
 
-        await this.ewait(until.elementLocated(locator));
+        await this.driver.wait(until.elementLocated(locator));
         const element = await this.finElement(locator);
         return element.getText();
     }
@@ -36,22 +36,22 @@ class Base {
     }
 
     async click(locator) {
-        //await this.ewait(until.elementIsVisible(this.finElement(locator)), 5000, 'Elemento no es visible.');
         const element = await this.finElement(locator);
         await element.click();
     }
 
-    async isElementVisible(locator, timeout = 5000) {
+    async isElementVisible(locator) {
         try {
-            await this.ewait(until.elementLocated(locator), timeout);
             const element = await this.finElement(locator);
+            await this.driver.wait(until.elementIsVisible(element));
             return await element.isDisplayed();
         } catch (error) {
-            return false;
+            if (error.name === 'NoSuchElementError') {
+                return false;
+            } else {
+                throw error;
+            }
         }
-    }
-    async visit(url) {
-        await this.driver.get(url);
     }
 
     async goForward() {
@@ -63,7 +63,7 @@ class Base {
     }
 
     async goFirstPage() {
-        this.isElementVisible(this.numberOneLocater)
+        await this.isElementVisible(this.numberOneLocater)
         await this.click(this.numberOneLocater);
         // await this.click(this.titleOneLocater); // Esta línea es opcional
     }

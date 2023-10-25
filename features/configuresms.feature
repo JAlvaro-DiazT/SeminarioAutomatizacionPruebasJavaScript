@@ -7,6 +7,6 @@ Feature: Configure SMS
 
     Given The user is on the login page sms
     And The user enters their username "alvaro" and password "diaz" sms
-    And The user is redirected to page 1
+    And The user is redirected to page
     When The user enters the name and description
     Then the user should be on the next page seeing the goal table

@@ -1,11 +1,11 @@
 const { When, Then, And, Given, Before, After, World} = require("@cucumber/cucumber");
-const SignInPage = require("../../../test/pageobjects/signin.page");
+const SignInPage = require("../../test/pageobjects/signin.page");
 const assert = require("assert");
 const { Builder } = require("selenium-webdriver");
 //const reporter = require('cucumber-html-reporter');
 const fs = require('fs');
-const Hook = require("../hook");
-const ConfigureSMSPage = require("../../../test/pageobjects/configuresms.page");
+const Hook = require("./hook");
+const ConfigureSMSPage = require("../../test/pageobjects/configuresms.page");
 let signInPage;
 let driver;
 
