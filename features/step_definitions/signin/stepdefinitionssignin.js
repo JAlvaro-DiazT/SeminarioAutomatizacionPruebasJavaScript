@@ -4,32 +4,19 @@ const assert = require("assert");
 const { Builder } = require("selenium-webdriver");
 //const reporter = require('cucumber-html-reporter');
 const fs = require('fs');
-
+const Hook = require("../hook");
+const ConfigureSMSPage = require("../../../test/pageobjects/configuresms.page");
 let signInPage;
 let driver;
 
 Before(async function () {
-    driver = await new Builder().forBrowser('chrome').build();
+    driver = Hook.getDriver();
     signInPage = new SignInPage(driver);
-    await signInPage.init();
-});
-
-After(async function () {
-
-    const screenshot = await driver.takeScreenshot();
-    const timestamp = new Date().getTime();
-    const screenshotPath = `./screenshots/screenshot_${timestamp}.png`;
-    // Guardar la captura de pantalla en un archivo
-    fs.writeFileSync(screenshotPath, screenshot, 'base64');
-
-    // Adjuntar la captura de pantalla al informe HTML
-    this.attach(screenshot, 'image/png', 'My screenshot step');
-
-    await signInPage.driver.quit();
 });
 
 Given(/^The user is on the login page$/, async function () {
-    await signInPage.visit('http://localhost:8080');
+    //await signInPage.visit('http://localhost:8080');
+
 });
 
 When(/^The user enters their username "([^"]*)" and password "([^"]*)"$/, async function (param1,param2) {
@@ -43,7 +30,7 @@ Then(/^The user should see the Logout button and Menu button$/, async function (
     const isGoOutVisible = await signInPage.isElementVisible(signInPage.registerGoOut);
     assert.strictEqual(isMenuVisible && isGoOutVisible, true);
 });
-Then(/^The user should see the fields sername and key$/, async function () {
+Then(/^The user should see the fields username and key$/, async function () {
     const isUserVisible = await signInPage.isElementVisible(signInPage.labelUser);
     const isKeyVisible = await signInPage.isElementVisible(signInPage.labelKey);
 

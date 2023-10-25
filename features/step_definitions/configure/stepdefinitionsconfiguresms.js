@@ -1,10 +1,9 @@
 const {Given, When, Then, Before, After} = require("@cucumber/cucumber");
-const {Builder} = require("selenium-webdriver");
 const SignInPage = require("../../../test/pageobjects/signin.page");
 const ConfigureSMSPage = require("../../../test/pageobjects/configuresms.page");
 const {faker} = require("@faker-js/faker");
 const assert = require("assert");
-const fs = require("fs");
+const Hook = require("../hook");
 
 
 let signInPage;
@@ -12,25 +11,13 @@ let configureSMS;
 let driver;
 
 Before(async function () {
-    driver = await new Builder().forBrowser('chrome').build();
+    driver = Hook.getDriver();
     signInPage = new SignInPage(driver);
     configureSMS = new ConfigureSMSPage(driver);
-    await configureSMS.init();
-});
-
-After(async function () {
-    const screenshot = await driver.takeScreenshot();
-    const timestamp = new Date().getTime();
-    const screenshotPath = `./screenshots/screenshot_${timestamp}.png`;
-    // Guardar la captura de pantalla en un archivo
-    fs.writeFileSync(screenshotPath, screenshot, 'base64');
-
-    // Adjuntar la captura de pantalla al informe HTML
-    this.attach(screenshot, 'image/png', 'My screenshot step');
-    await configureSMS.driver.quit();
 });
 Given(/^The user is on the login page sms$/, async function () {
-    await configureSMS.visit('http://localhost:8080');
+    //await configureSMS.visit('http://localhost:8080');
+
 });
 Given(/^The user enters their username "([^"]*)" and password "([^"]*)" sms$/, async function (param1,param2) {
     const user = param1;

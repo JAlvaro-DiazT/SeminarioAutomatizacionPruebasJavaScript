@@ -16,6 +16,6 @@ var options = {
     }
 }
 
-gulp.task('cucumberReports', function (){
-    reporter.generate(options);
-})
+gulp.task('cucumberReports', function (done) {
+    reporter.generate(options, done);
+});

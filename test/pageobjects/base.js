@@ -3,18 +3,11 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 class Base {
     constructor(driver) {
         this.driver = driver;
-        this.ewait = null;
+
         this.goForward = By.xpath("//span[@class='ui-button-icon-left ui-icon ui-c pi pi-arrow-circle-right']");
         this.goBack = By.xpath("//span[@class='ui-button-icon-left ui-icon ui-c pi pi-arrow-circle-left']");
         this.numberOneLocater = By.xpath("//span[@class='ui-steps-number' and text()='1']");
         this.titleOneLocater = By.xpath("//span[@class='ui-steps-title' and text()='Configurar SMS']");
-    }
-
-    async init() {
-        //this.driver = await new Builder().forBrowser('chrome').build();
-        this.ewait = (condition) => {
-            return this.driver.wait(condition);
-        };
     }
 
     async finElement(locator) {
